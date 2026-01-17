@@ -1,0 +1,23 @@
+from telegram import update 
+from telegram.ext import ApplicationBuilder, messageHandler, context Types, filters 
+
+TOKEN = 8253505126:AAHdrVmUoLCC1_jcqgUZ2iWIZKgHvxrPhmM
+
+async def auto_reply(update, context: context Types.DEFAULT_TYPE):
+
+    text = update. message. text. lower()
+
+"akkam" in text: 
+  reply = "Nagaa kooti! isin akkam?"
+
+elif "Gargaarsan Barbaada!" in text:
+  reply = "Ani bot telegram Deebii ofiin kennaadha.🥰"
+
+else: "Barnootan Barbaada." in text:
+  reply = "Maal irratti barachuu barbaadda?"
+
+await update. message. reply_text(reply)
+
+app = ApplicationBuilder(). token(8253505126:AAHdrVmUoLCC1_jcqgUZ2iWIZKgHvxrPhmM). build()
+app. add_handler(MessageHandler(filters. TEXT & filters. PRIVATE, auto_reply))
+
