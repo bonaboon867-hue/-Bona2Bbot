@@ -1,23 +1,34 @@
-from telegram import update 
-from telegram.ext import ApplicationBuilder, messageHandler, context Types, filters 
+from telegram import Update
+from telegram.ext import ApplicationBuilder, MessageHandler, CommandHandler, ContextTypes, filters
 
-TOKEN = 8253505126:AAHdrVmUoLCC1_jcqgUZ2iWIZKgHvxrPhmM
+TOKEN = "TOKEN_KEE_ASI"
 
-async def auto_reply(update, context: context Types.DEFAULT_TYPE):
+# /start command
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "Akkam jirtu 👋\nAni Telegram Bot public deebii ofumaan kennu dha 🤖"
+    )
 
-    text = update. message. text. lower()
+# Ergaa kamiyyuu deebisu
+async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    text = update.message.text.lower()
 
-"akkam" in text: 
-  reply = "Nagaa kooti! isin akkam?"
+    if "akkam" in text:
+        reply = "Nagaan jira 😊 ati hoo?"
+    elif "maqaa kee" in text:
+        reply = "Ani Public Reply Bot dha 🤖"
+    elif "galatoomi" in text:
+        reply = "Baga nagaan! 😊"
+    else:
+        reply = "Ergaa kee argadhe 👍"
 
-elif "Gargaarsan Barbaada!" in text:
-  reply = "Ani bot telegram Deebii ofiin kennaadha.🥰"
+    await update.message.reply_text(reply)
 
-else: "Barnootan Barbaada." in text:
-  reply = "Maal irratti barachuu barbaadda?"
+# App
+app = ApplicationBuilder().token(TOKEN).build()
 
-await update. message. reply_text(reply)
+app.add_handler(CommandHandler("start", start))
+app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, auto_reply))
 
-app = ApplicationBuilder(). token(8253505126:AAHdrVmUoLCC1_jcqgUZ2iWIZKgHvxrPhmM). build()
-app. add_handler(MessageHandler(filters. TEXT & filters. PRIVATE, auto_reply))
-
+print("Bot hojjechaa jira...")
+app.run_polling()
